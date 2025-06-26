@@ -160,6 +160,7 @@ async function onSubmit() {
   try {
     const response = await fetch(url, {
       method: 'POST',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(payload),
     })
