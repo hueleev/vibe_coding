@@ -156,7 +156,7 @@ async function onSubmit() {
   }
   const url = window.location.href.includes('localhost')
     ? '/api'
-    : 'https://script.google.com/macros/s/AKfycbyCICRPYlac8nKrHc3iOLL9glmw_gkZXfnYMGJVGu4EfqX9YytjnenqJV6eE8nG6HS94w/exec'
+    : 'https://script.google.com/macros/s/AKfycbxH0-mjoVuzkQGCxcTR9pO-NWNldwbZgtV3uFWaFIXaEaxVeaOPEiey2gOSSjuuqIjWyQ/exec'
   try {
     const response = await fetch(url, {
       method: 'POST',

@@ -17,7 +17,7 @@ export default defineConfig({
       // '/api'로 시작하는 요청을 구글 앱스 스크립트로 프록시
       '/api': {
         target:
-          'https://script.google.com/macros/s/AKfycbyCICRPYlac8nKrHc3iOLL9glmw_gkZXfnYMGJVGu4EfqX9YytjnenqJV6eE8nG6HS94w/exec',
+          'https://script.google.com/macros/s/AKfycbxH0-mjoVuzkQGCxcTR9pO-NWNldwbZgtV3uFWaFIXaEaxVeaOPEiey2gOSSjuuqIjWyQ/exec',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false,
