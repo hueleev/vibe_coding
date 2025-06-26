@@ -154,8 +154,11 @@ async function onSubmit() {
     fileName: form.value.file ? form.value.file.name : '',
     fileBase64: fileBase64,
   }
+  const url = window.location.href.includes('localhost')
+    ? '/api'
+    : 'https://script.google.com/macros/s/AKfycbxCbVmgexAw6wItTanAAz0VNGpUZkwl_9YdZ8wOm9IxZ1bM9ySJ7ZiRqyPwBCJxKK5oBQ/exec'
   try {
-    const response = await fetch('/api', {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
