@@ -1,91 +1,147 @@
 <template>
-  <div class="fund-bg">
-    <div class="fund-card">
-      <h2 class="form-title-main">✨ 상조회 경조금 신청 ✨</h2>
-      <form class="fund-form" @submit.prevent="onSubmit">
-        <div class="form-group">
-          <label for="name">▪ 이름</label>
-          <input
-            id="name"
-            v-model="form.name"
-            type="text"
-            required
-            :placeholder="'이름을 입력하세요'"
-          />
-        </div>
-        <div class="form-group">
-          <label for="department">▪ 부서</label>
-          <input
-            id="department"
-            v-model="form.department"
-            type="text"
-            required
-            :placeholder="'부서를 입력하세요'"
-          />
-        </div>
-        <div class="form-group">
-          <label for="eventCategory">▪ 상위 경조항목</label>
-          <select id="eventCategory" v-model="form.eventCategory" required>
-            <option value="">상위 경조항목을 선택하세요</option>
-            <option value="결혼">결혼</option>
-            <option value="회갑">회갑</option>
-            <option value="고희">고희</option>
-            <option value="칠순">칠순</option>
-            <option value="팔순">팔순</option>
-            <option value="구순">구순</option>
-            <option value="사망">사망</option>
-            <option value="위로금">위로금</option>
-            <option value="기타">기타</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="eventType">▪ 하위 경조항목</label>
-          <select id="eventType" v-model="form.eventType" required>
-            <option value="">하위 경조항목을 선택하세요</option>
-            <option v-for="item in filteredEventTypes" :key="item.value" :value="item.value">
-              {{ item.label }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="amount">▪ 금액</label>
-          <input
-            id="amount"
-            :value="displayAmount"
-            @input="onAmountInput"
-            type="text"
-            readonly
-            :placeholder="'금액이 자동 입력됩니다'"
-          />
-        </div>
-        <div class="form-group">
-          <label for="bank">▪ 은행명</label>
-          <input
-            id="bank"
-            v-model="form.bank"
-            type="text"
-            required
-            :placeholder="'은행명을 입력하세요'"
-          />
-        </div>
-        <div class="form-group">
-          <label for="account">▪ 계좌번호</label>
-          <input
-            id="account"
-            v-model="form.account"
-            type="text"
-            required
-            :placeholder="'계좌번호를 입력하세요'"
-          />
-        </div>
-        <div class="form-group">
-          <label for="file">▪ 첨부파일</label>
-          <input id="file" type="file" @change="onFileChange" required />
-          <div class="helper-text">{{ helperText }}</div>
-        </div>
-        <button type="submit" class="submit-btn">제출하기</button>
-      </form>
-    </div>
+  <div class="fund-bg bg-gradient-to-tr from-pink-100 via-violet-100 to-yellow-50">
+    <Card class="fund-card shadow-2xl bg-white/90 rounded-3xl border-0">
+      <CardHeader class="flex flex-col items-center gap-2 pb-0">
+        <CardTitle class="form-title-main text-violet-500">✨ 상조회 경조금 신청 ✨</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form class="fund-form space-y-6" @submit.prevent="onSubmit">
+          <div class="form-group relative">
+            <IconUser
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-pink-300 pointer-events-none"
+            />
+            <Input
+              id="name"
+              v-model="form.name"
+              type="text"
+              required
+              :placeholder="'이름을 입력하세요'"
+              class="pl-14 h-12 bg-pink-50 border-pink-200 focus:border-violet-300"
+            />
+          </div>
+          <div class="form-group relative">
+            <IconDepartment
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-yellow-300 pointer-events-none"
+            />
+            <Input
+              id="department"
+              v-model="form.department"
+              type="text"
+              required
+              :placeholder="'부서를 입력하세요'"
+              class="pl-14 h-12 bg-yellow-50 border-yellow-200 focus:border-violet-300"
+            />
+          </div>
+          <div class="form-group relative">
+            <IconGift
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-pink-300 pointer-events-none"
+            />
+            <Select v-model="form.eventCategory" class="w-full">
+              <SelectTrigger
+                id="eventCategory"
+                required
+                class="pl-14 h-12 bg-violet-50 border-violet-200 focus:border-pink-200"
+              >
+                <SelectValue placeholder="상위 경조항목을 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="결혼">결혼</SelectItem>
+                <SelectItem value="회갑">회갑</SelectItem>
+                <SelectItem value="고희">고희</SelectItem>
+                <SelectItem value="칠순">칠순</SelectItem>
+                <SelectItem value="팔순">팔순</SelectItem>
+                <SelectItem value="구순">구순</SelectItem>
+                <SelectItem value="사망">사망</SelectItem>
+                <SelectItem value="위로금">위로금</SelectItem>
+                <SelectItem value="기타">기타</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div class="form-group relative">
+            <IconList
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-violet-400 pointer-events-none"
+            />
+            <Select v-model="form.eventType" class="w-full">
+              <SelectTrigger
+                id="eventType"
+                required
+                class="pl-14 h-12 bg-pink-50 border-pink-200 focus:border-violet-200"
+              >
+                <SelectValue placeholder="하위 경조항목을 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem
+                  v-for="item in filteredEventTypes"
+                  :key="item.value"
+                  :value="item.value"
+                >
+                  {{ item.label }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div class="form-group relative">
+            <IconMoney
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-yellow-300 pointer-events-none"
+            />
+            <Input
+              id="amount"
+              :model-value="displayAmount"
+              @update:modelValue="onAmountInput"
+              type="text"
+              readonly
+              :placeholder="'금액이 자동 입력됩니다'"
+              class="pl-14 h-12 bg-yellow-50 border-yellow-200 focus:border-violet-300"
+            />
+          </div>
+          <div class="form-group relative">
+            <IconBank
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-violet-400 pointer-events-none"
+            />
+            <Input
+              id="bank"
+              v-model="form.bank"
+              type="text"
+              required
+              :placeholder="'은행명을 입력하세요'"
+              class="pl-11 h-12 bg-violet-50 border-violet-200 focus:border-pink-200"
+            />
+          </div>
+          <div class="form-group relative">
+            <IconCard
+              class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-pink-300 pointer-events-none"
+            />
+            <Input
+              id="account"
+              v-model="form.account"
+              type="text"
+              required
+              :placeholder="'계좌번호를 입력하세요'"
+              class="pl-11 h-12 bg-pink-50 border-pink-200 focus:border-violet-300"
+            />
+          </div>
+          <div class="form-group relative">
+            <IconFile class="absolute left-4 top-1/3 -translate-y-1/2 w-6 h-6 text-violet-400" />
+            <Input
+              id="file"
+              type="file"
+              @change="onFileChange"
+              required
+              class="pl-11 h-12 bg-violet-50 border-violet-200"
+            />
+            <div class="helper-text text-xs text-violet-400 ml-2 mt-1">{{ helperText }}</div>
+          </div>
+          <CardFooter class="p-0 pt-2">
+            <Button
+              type="submit"
+              class="w-full bg-gradient-to-r from-pink-200 via-violet-200 to-yellow-100 text-violet-600 shadow-lg hover:from-violet-200 hover:to-pink-100 rounded-2xl py-6 text-lg font-bold"
+            >
+              제출하기
+            </Button>
+          </CardFooter>
+        </form>
+      </CardContent>
+    </Card>
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-person">
@@ -175,6 +231,24 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select'
+import IconUser from '@/components/icons/IconUser.vue'
+import IconDepartment from '@/components/icons/IconDepartment.vue'
+import IconGift from '@/components/icons/IconGift.vue'
+import IconList from '@/components/icons/IconList.vue'
+import IconMoney from '@/components/icons/IconMoney.vue'
+import IconBank from '@/components/icons/IconBank.vue'
+import IconCard from '@/components/icons/IconCard.vue'
+import IconFile from '@/components/icons/IconFile.vue'
 
 const eventTypeOptions = {
   결혼: [
@@ -275,11 +349,8 @@ watch(
   },
 )
 
-function onAmountInput(event: Event) {
-  const target = event.target as HTMLInputElement
-  if (target && target.value !== undefined) {
-    displayAmount.value = target.value
-  }
+function onAmountInput(val: string | number) {
+  displayAmount.value = String(val)
 }
 
 function onFileChange(e: Event) {
@@ -379,7 +450,7 @@ async function onSubmit() {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  padding-bottom: 70px;
+  padding-bottom: 90px;
   z-index: 0;
   box-sizing: border-box;
 }
@@ -421,7 +492,6 @@ async function onSubmit() {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 22px;
 }
 .form-group {
   display: flex;
@@ -442,11 +512,17 @@ input[type='email'] {
   border: 2px solid #f7d8ff;
   border-radius: 28px;
   background: #fafffd;
-  padding: 14px 18px;
+  padding: 14px 18px 14px 49px;
   font-size: 1.1rem;
   font-family: 'Inter', sans-serif;
   transition: border 0.2s;
   color: #7d5fa6;
+}
+input[type='file']::file-selector-button {
+  display: none;
+}
+input[type='file']::-webkit-file-upload-button {
+  display: none;
 }
 input[type='text']:focus,
 input[type='number']:focus,
@@ -511,7 +587,7 @@ select {
 .footer-person {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
   font-size: 1.05rem;
   font-weight: 500;
 }
@@ -543,7 +619,7 @@ select {
 }
 @media (max-width: 900px) {
   .fund-bg {
-    padding-bottom: 95px;
+    padding-bottom: 125px;
   }
   .fund-card {
     width: 90vw;
@@ -562,7 +638,8 @@ select {
   }
   .footer-person {
     font-size: 0.98rem;
-    gap: 4px;
+    gap: 13px;
+    align-items: center;
   }
 }
 .helper-text {
