@@ -154,12 +154,10 @@ async function onSubmit() {
     fileName: form.value.file ? form.value.file.name : '',
     fileBase64: fileBase64,
   }
-  //   const url = window.location.href.includes('localhost')
-  //     ? '/api'
-  //     : 'https://script.google.com/macros/s/AKfycbybekm4pDzZuu1rk9UlyDifjDCZGCJMerE1EMH8kukI3w37rMBRr07oBuYPwA0SQKrSHQ/exec'
   const url = window.location.href.includes('localhost')
-    ? '/api' // local dev일 경우
-    : '/api' // 배포 시
+    ? '/api'
+    : 'https://script.google.com/macros/s/AKfycbybekm4pDzZuu1rk9UlyDifjDCZGCJMerE1EMH8kukI3w37rMBRr07oBuYPwA0SQKrSHQ/exec'
+
   try {
     const response = await fetch(url, {
       method: 'POST',
