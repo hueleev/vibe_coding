@@ -280,7 +280,7 @@ const eventTypeOptions = {
     { value: '사망-부모', label: '부모', amount: 2000000 },
     { value: '사망-배우자부모', label: '배우자부모', amount: 700000 },
     { value: '사망-배우자', label: '배우자', amount: 700000 },
-    { value: '사망-자녀', label: '자녀녀', amount: 700000 },
+    { value: '사망-자녀', label: '자녀', amount: 700000 },
   ],
   위로금: [
     { value: '위로금-재해위로금', label: '재해위로금 (천재지변)', amount: 700000 },
