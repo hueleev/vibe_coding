@@ -153,13 +153,10 @@ async function onSubmit() {
     account: form.value.account,
     fileName: form.value.file ? form.value.file.name : '',
     fileBase64: fileBase64,
-  }
-  const url = window.location.href.includes('localhost')
-    ? '/api'
-    : 'https://script.google.com/macros/s/AKfycbybekm4pDzZuu1rk9UlyDifjDCZGCJMerE1EMH8kukI3w37rMBRr07oBuYPwA0SQKrSHQ/exec'
+  }'
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch('/api', {
       method: 'POST',
       mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
