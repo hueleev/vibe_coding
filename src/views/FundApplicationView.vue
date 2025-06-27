@@ -153,7 +153,7 @@ async function onSubmit() {
     account: form.value.account,
     fileName: form.value.file ? form.value.file.name : '',
     fileBase64: fileBase64,
-  }'
+  }
 
   try {
     const response = await fetch('/api', {
