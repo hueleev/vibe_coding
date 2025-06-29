@@ -400,28 +400,23 @@ const helperText = computed(() => {
 })
 
 async function onSubmit() {
-  let fileBase64 = ''
+  const formData = new FormData()
+  formData.append('name', form.value.name)
+  formData.append('department', form.value.department)
+  formData.append('eventCategory', form.value.eventCategory)
+  formData.append('eventType', form.value.eventType)
+  formData.append('amount', form.value.amount)
+  formData.append('bank', form.value.bank)
+  formData.append('account', form.value.account)
   if (form.value.file) {
-    fileBase64 = await toBase64(form.value.file)
-  }
-  const payload = {
-    name: form.value.name,
-    department: form.value.department,
-    eventCategory: form.value.eventCategory,
-    eventType: form.value.eventType,
-    amount: form.value.amount,
-    bank: form.value.bank,
-    account: form.value.account,
-    fileName: form.value.file ? form.value.file.name : '',
-    fileBase64: fileBase64,
+    formData.append('file', form.value.file, form.value.file.name)
   }
 
   try {
     const response = await fetch('/api', {
       method: 'POST',
       mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: formData,
     })
 
     if (response.ok) {
