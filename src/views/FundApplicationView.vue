@@ -147,8 +147,11 @@
             <Button
               type="submit"
               class="w-full bg-gradient-to-r from-pink-200 via-violet-200 to-yellow-100 text-violet-600 shadow-lg hover:from-violet-200 hover:to-pink-100 rounded-2xl py-6 text-lg font-bold"
+              :disabled="loading"
             >
-              제출하기
+              <span v-if="loading" class="loader mr-2"></span>
+              <span v-if="!loading">제출하기</span>
+              <span v-else>전송 중...</span>
             </Button>
           </CardFooter>
         </form>
@@ -237,6 +240,9 @@
         </div>
       </footer>
     </transition>
+    <div v-if="loading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
   </div>
 </template>
 
@@ -416,6 +422,8 @@ function fileInputClick() {
   fileInput.value?.click()
 }
 
+const loading = ref(false)
+
 async function onSubmit() {
   let fileBase64 = ''
   if (form.value.file) {
@@ -433,15 +441,16 @@ async function onSubmit() {
     fileBase64: fileBase64,
   }
 
+  loading.value = true
   try {
     const response = await fetch('/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
-    alert(JSON.stringify(response))
     if (response.ok) {
       alert('신청폼이 전송되었습니다!')
+      loading.value = false
       return
     } else {
       alert('신청폼 전송을 실패하였습니다!')
@@ -449,6 +458,8 @@ async function onSubmit() {
   } catch (error) {
     alert('서버 오류! 다시 시도해 주세요.' + (error instanceof Error ? error.message : error))
     console.error(error instanceof Error ? error.message : error)
+  } finally {
+    loading.value = false
   }
 }
 
@@ -747,6 +758,42 @@ select {
   .footer-fab {
     right: 15px;
     bottom: 15px;
+  }
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-spinner,
+.loader {
+  border: 4px solid #e0d7ff;
+  border-top: 4px solid #a97fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+.loader {
+  width: 20px;
+  height: 20px;
+  border-width: 3px;
+  vertical-align: middle;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
