@@ -439,7 +439,7 @@ async function onSubmit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
-
+    alert(JSON.stringify(response))
     if (response.ok) {
       alert('신청폼이 전송되었습니다!')
       return
