@@ -122,13 +122,25 @@
           </div>
           <div class="form-group relative">
             <IconFile class="absolute left-4 top-1/3 -translate-y-1/2 w-6 h-6 text-violet-400" />
-            <Input
+            <input
               id="file"
+              ref="fileInput"
               type="file"
               @change="onFileChange"
               required
-              class="pl-11 h-12 bg-violet-50 border-violet-200"
+              class="hidden"
             />
+            <div
+              class="pl-11 h-12 bg-violet-50 border-violet-200 rounded-2xl flex items-center cursor-pointer"
+              @click="fileInputClick"
+            >
+              <span class="text-violet-600 flex-1 truncate">
+                {{ form.file ? form.file.name : '파일을 선택하세요' }}
+              </span>
+              <span class="px-3 py-1 ml-2 bg-violet-200 text-violet-700 rounded-xl text-xs mr-3"
+                >파일 선택</span
+              >
+            </div>
             <div class="helper-text text-xs text-violet-400 ml-2 mt-1">{{ helperText }}</div>
           </div>
           <CardFooter class="p-0 pt-2">
@@ -142,95 +154,94 @@
         </form>
       </CardContent>
     </Card>
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-person">
-          <span class="footer-role">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 20 20"
-              fill="none"
-              style="vertical-align: middle; margin-right: 2px"
-            >
-              <circle cx="10" cy="7" r="4" fill="#1976d2" />
-              <ellipse cx="10" cy="15.5" rx="7" ry="4.5" fill="#b3ddff" />
-            </svg>
-            회장
-          </span>
-          <span class="footer-name">홍길동</span>
-          <span class="footer-sep">|</span>
-
-          <span class="footer-email">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 20 20"
-              fill="none"
-              style="vertical-align: middle; margin-right: 2px"
-            >
-              <rect
-                x="3"
-                y="5"
-                width="14"
-                height="10"
-                rx="2"
-                stroke="#1976d2"
-                stroke-width="1.5"
-                fill="none"
-              />
-              <path d="M3 5l7 6 7-6" stroke="#1976d2" stroke-width="1.5" fill="none" />
-            </svg>
-            president@email.com
-          </span>
+    <div class="footer-fab" @click="toggleFooter">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="16" fill="#a97fff" />
+        <path
+          d="M16 10a2 2 0 110 4 2 2 0 010-4zm0 6c-2.21 0-4 1.343-4 3v1a1 1 0 001 1h6a1 1 0 001-1v-1c0-1.657-1.79-3-4-3z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <transition name="footer-slide">
+      <footer class="footer" v-show="showFooter">
+        <div class="footer-content">
+          <div class="footer-person-card">
+            <div class="footer-person-icon">
+              <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="7" r="4" fill="#1976d2" />
+                <ellipse cx="10" cy="15.5" rx="7" ry="4.5" fill="#b3ddff" />
+              </svg>
+            </div>
+            <div class="footer-person-info">
+              <span class="footer-role">회장</span>
+              <span class="footer-name">홍길동</span>
+              <span class="footer-email">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  style="vertical-align: middle; margin-right: 2px"
+                >
+                  <rect
+                    x="3"
+                    y="5"
+                    width="14"
+                    height="10"
+                    rx="2"
+                    stroke="#1976d2"
+                    stroke-width="1.5"
+                    fill="none"
+                  />
+                  <path d="M3 5l7 6 7-6" stroke="#1976d2" stroke-width="1.5" fill="none" />
+                </svg>
+                president@email.com
+              </span>
+            </div>
+          </div>
+          <div class="footer-person-card">
+            <div class="footer-person-icon">
+              <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="7" r="4" fill="#1976d2" />
+                <ellipse cx="10" cy="15.5" rx="7" ry="4.5" fill="#b3ddff" />
+              </svg>
+            </div>
+            <div class="footer-person-info">
+              <span class="footer-role">총무</span>
+              <span class="footer-name">김철수</span>
+              <span class="footer-email">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  style="vertical-align: middle; margin-right: 2px"
+                >
+                  <rect
+                    x="3"
+                    y="5"
+                    width="14"
+                    height="10"
+                    rx="2"
+                    stroke="#1976d2"
+                    stroke-width="1.5"
+                    fill="none"
+                  />
+                  <path d="M3 5l7 6 7-6" stroke="#1976d2" stroke-width="1.5" fill="none" />
+                </svg>
+                manager@email.com
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="footer-person">
-          <span class="footer-role">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 20 20"
-              fill="none"
-              style="vertical-align: middle; margin-right: 2px"
-            >
-              <circle cx="10" cy="7" r="4" fill="#1976d2" />
-              <ellipse cx="10" cy="15.5" rx="7" ry="4.5" fill="#b3ddff" />
-            </svg>
-            총무
-          </span>
-          <span class="footer-name">김철수</span>
-          <span class="footer-sep">|</span>
-
-          <span class="footer-email">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 20 20"
-              fill="none"
-              style="vertical-align: middle; margin-right: 2px"
-            >
-              <rect
-                x="3"
-                y="5"
-                width="14"
-                height="10"
-                rx="2"
-                stroke="#1976d2"
-                stroke-width="1.5"
-                fill="none"
-              />
-              <path d="M3 5l7 6 7-6" stroke="#1976d2" stroke-width="1.5" fill="none" />
-            </svg>
-            manager@email.com
-          </span>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </transition>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -399,6 +410,12 @@ const helperText = computed(() => {
   return `증명 문서: ${helperTextMap[form.value.eventType]}`
 })
 
+const fileInput = ref<HTMLInputElement | null>(null)
+
+function fileInputClick() {
+  fileInput.value?.click()
+}
+
 async function onSubmit() {
   let fileBase64 = ''
   if (form.value.file) {
@@ -419,7 +436,6 @@ async function onSubmit() {
   try {
     const response = await fetch('/api', {
       method: 'POST',
-      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
@@ -430,10 +446,38 @@ async function onSubmit() {
     } else {
       alert('신청폼 전송을 실패하였습니다!')
     }
-  } catch {
-    alert('서버 오류! 다시 시도해 주세요.')
+  } catch (error) {
+    alert('서버 오류! 다시 시도해 주세요.' + (error instanceof Error ? error.message : error))
+    console.error(error instanceof Error ? error.message : error)
   }
 }
+
+const showFooter = ref(false)
+
+function toggleFooter() {
+  showFooter.value = !showFooter.value
+}
+
+function hideFooterOnOutsideClick(e: MouseEvent) {
+  const footer = document.querySelector('.footer')
+  const btn = document.querySelector('.footer-fab')
+  if (
+    showFooter.value &&
+    footer &&
+    !footer.contains(e.target as Node) &&
+    btn &&
+    !btn.contains(e.target as Node)
+  ) {
+    showFooter.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('mousedown', hideFooterOnOutsideClick)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', hideFooterOnOutsideClick)
+})
 </script>
 
 <style scoped>
@@ -450,7 +494,6 @@ async function onSubmit() {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  padding-bottom: 90px;
   z-index: 0;
   box-sizing: border-box;
 }
@@ -566,86 +609,144 @@ select {
 }
 .footer {
   width: 100vw;
-  background: #f9f6ff;
+  background: linear-gradient(90deg, #f9f6ff 60%, #e3e0ff 100%);
   color: #7d5fa6;
-  border-top: 2px solid #ffe9b3;
+  border-top: none;
   position: fixed;
   left: 0;
   bottom: 0;
   padding: 0;
   z-index: 10;
+  box-shadow: 0 -2px 16px #b6c7ff33;
+  border-radius: 24px 24px 0 0;
 }
 .footer-content {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   gap: 32px;
-  padding: 16px 0 10px 0;
+  padding: 18px 0 12px 0;
   flex-wrap: wrap;
 }
-.footer-person {
+.footer-person-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 12px #b6c7ff22;
+  border-radius: 18px;
+  padding: 12px 24px 12px 16px;
+  min-width: 180px;
+  margin: 0 8px;
+  gap: 12px;
+  transition: box-shadow 0.2s;
+}
+.footer-person-card:hover {
+  box-shadow: 0 4px 24px #a97fff33;
+}
+.footer-person-icon {
   display: flex;
   align-items: center;
-  gap: 15px;
-  font-size: 1.05rem;
-  font-weight: 500;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3e0ff 60%, #f9f6ff 100%);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 1px 4px #b6c7ff33;
+}
+.footer-person-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 .footer-role {
-  color: #ffb3b3;
+  color: #a97fff;
   font-weight: 700;
-  margin-right: 2px;
+  font-size: 1.05rem;
+  margin-bottom: 1px;
 }
 .footer-name {
-  color: #a97fff;
+  color: #ffb3b3;
   font-weight: 600;
-}
-.footer-phone {
-  color: #7d5fa6;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
 }
 .footer-email {
   color: #7d5fa6;
   font-size: 0.98rem;
   font-weight: 500;
-}
-.footer-sep {
-  color: #ffe9b3;
-  margin: 0 6px;
-  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 .footer svg {
   filter: drop-shadow(0 1px 0 #ffe9b3);
-}
-@media (max-width: 900px) {
-  .fund-bg {
-    padding-bottom: 125px;
-  }
-  .fund-card {
-    width: 90vw;
-    max-width: 98vw;
-    padding: 30px;
-  }
-  .form-title-main {
-    font-size: 1.3rem;
-  }
-  .footer-content {
-    display: flex;
-    gap: 8px;
-    padding: 10px 0 6px 0;
-    justify-content: center;
-    align-items: center;
-  }
-  .footer-person {
-    font-size: 0.98rem;
-    gap: 13px;
-    align-items: center;
-  }
 }
 .helper-text {
   font-size: 0.98rem;
   color: #ffb3b3;
   margin-top: 4px;
   margin-left: 2px;
+}
+.footer-fab {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 100;
+  box-shadow: 0 2px 12px #a97fff44;
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  transition: box-shadow 0.2s;
+}
+.footer-fab:hover {
+  box-shadow: 0 4px 24px #a97fff66;
+}
+.footer {
+  transition:
+    transform 0.3s cubic-bezier(0.4, 2, 0.6, 1),
+    opacity 0.3s;
+}
+.footer-slide-enter-from,
+.footer-slide-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
+.footer-slide-enter-to,
+.footer-slide-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
+@media (max-width: 900px) {
+  .fund-card {
+    width: 95%;
+  }
+  .form-title-main {
+    font-size: 1.3rem;
+  }
+  .footer {
+    border-radius: 18px 18px 0 0;
+  }
+  .footer-content {
+    gap: 10px;
+    padding: 10px 0 6px 0;
+  }
+  .footer-person-card {
+    padding: 10px 12px 10px 10px;
+    min-width: 120px;
+    gap: 8px;
+  }
+  .footer-person-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .footer-role,
+  .footer-name {
+    font-size: 0.98rem;
+  }
+  .footer-fab {
+    right: 15px;
+    bottom: 15px;
+  }
 }
 </style>
